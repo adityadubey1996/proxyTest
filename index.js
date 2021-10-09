@@ -1,25 +1,65 @@
 var http = require('http');
+var app = require('express')()
+// import http from "http"
+// import url from "url"
+// import fetch from "fetch"
 var url = require('url');
-var request = require('request');
-
-http.createServer(onRequest).listen(3000);
-
-function onRequest(req, res) {
+// var request = require('request');
+// const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 
+
+app.get('/', async (req,res) =>{
     var queryData = url.parse(req.url, true).query;
     if (queryData.url) {
-        request({
-            url: queryData.url
-        }).on('error', function(e) {
-            res.end(e);
-        }).pipe(res);
-        res.send({res})
+        // request({
+        //     url: queryData.url
+        // }).on('error', function(e) {
+        //     res.end(e);
+        // }).pipe(res);
+        // res.send({res})
+const testing = await fetch(queryData.url)
+const response = await testing.text()
+res.json({'html': response})
+    //     fetch(queryData.url)
+    // .then(res => res.text())
+    // .then(text => {console.log(text)
+    // })
     }
     else {
         res.end("no url found");
     }
-}
+})
+app.listen(8080,()=> console.log("Proxy listening at 8080"))
+
+
+
+// http.createServer(onRequest).listen(3000);
+
+// async function onRequest(req, res) {
+
+
+//     var queryData = url.parse(req.url, true).query;
+//     if (queryData.url) {
+//         // request({
+//         //     url: queryData.url
+//         // }).on('error', function(e) {
+//         //     res.end(e);
+//         // }).pipe(res);
+//         // res.send({res})
+// const testing = await fetch(queryData.url)
+// const response = await testing.text()
+// res.write(response)
+//     //     fetch(queryData.url)
+//     // .then(res => res.text())
+//     // .then(text => {console.log(text)
+//     // })
+//     }
+//     else {
+//         res.end("no url found");
+//     }
+// }
 
 // var http = require('http'),
 //     httpProxy = require('http-proxy');

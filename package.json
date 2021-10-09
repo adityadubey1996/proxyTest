@@ -13,6 +13,7 @@
     "http": "0.0.1-security",
     "http-proxy": "^1.18.1",
     "http-proxy-middleware": "^2.0.1",
+    "node-fetch": "^3.0.0",
     "nodemon": "^2.0.13",
     "request": "^2.88.2",
     "url": "^0.11.0"
