@@ -1,5 +1,6 @@
 var http = require('http');
 var app = require('express')()
+require('dotenv').config()
 // import http from "http"
 // import url from "url"
 // import fetch from "fetch"
@@ -7,7 +8,7 @@ var url = require('url');
 // var request = require('request');
 // const fetch = require('node-fetch');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-
+const port = process.env.PORT || 3000
 
 
 app.get('/', async (req,res) =>{
@@ -30,7 +31,7 @@ app.get('/', async (req,res) =>{
       
     }
 })
-app.listen(8080,()=> console.log("Proxy listening at 8080"))
+app.listen(port,()=> console.log(`Proxy listening at ${port}`))
 
 
 
