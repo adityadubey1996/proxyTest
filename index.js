@@ -13,22 +13,21 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 app.get('/', async (req,res) =>{
     var queryData = url.parse(req.url, true).query;
     if (queryData.url) {
-        // request({
-        //     url: queryData.url
-        // }).on('error', function(e) {
-        //     res.end(e);
-        // }).pipe(res);
-        // res.send({res})
-const testing = await fetch(queryData.url)
-const response = await testing.text()
-res.json({'html': response})
-    //     fetch(queryData.url)
-    // .then(res => res.text())
-    // .then(text => {console.log(text)
-    // })
+      
+        try{
+            const testing = await fetch(queryData.url)
+            const response = await testing.text()
+            res.json({'html': response, 'success' : true})
+        }
+        catch(e){
+            res.json({'html' : e, 'success': false})
+        }
+
+ 
     }
     else {
-        res.end("no url found");
+        res.send("enter url params, try /?url=https://www.google.com/")
+      
     }
 })
 app.listen(8080,()=> console.log("Proxy listening at 8080"))
